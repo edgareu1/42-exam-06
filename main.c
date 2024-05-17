@@ -138,10 +138,13 @@ int main(int argc, char **argv)
 			if (new_fd < 0)
 				error(ERR_SYS);
 
+			// Check if we have an unused FD
+			// If so, broadcast the CONNECT msg
 			LOOP {
 				if (clients[i].fd < 0)
 				{
-					clients[i].id = last_id + 1; last_id++;
+					clients[i].id = last_id + 1;
+					last_id++;
 					clients[i].fd = new_fd;
 					memset(buffer, 0, BUFFER_SIZE);
 					sprintf(buffer, LOG_CONNECT, clients[i].id);
